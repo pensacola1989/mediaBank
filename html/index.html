@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="../css/style.css"/>
+		<script type="text/javascript" src="../scripts/lib/plupload.full.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+		<script type="text/javascript" src="../scripts/lib/jPlayer/jquery.jplayer.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular.min.js"></script>
+		<script type="text/javascript" src="../scripts/index.js"></script>
+	</head>
+	<body>
+		<div class="wrapper" ng-app="mediaBank" ng-controller="index">
+			<div play-modal></div>
+			<div modal-win></div>
+			<div class="temp" style="display:none;">
+		      <div class="modal"  ng-show="isOpen"> 
+		        <div class="window">
+		          <div class="window_holder">
+		          		<div class="h_left">
+		          			<h3>Upload Media Files :{{fileLength}}</h3>
+		          			<br/>
+		          			<p>
+		          				<label class="m_label">Product:</label>
+		          				<select id="m_product" ng-model="product" ng-options="t for t in drpProduct">
+		          					<option>test</option>
+		          				</select>
+		          			</p>
+		          			<div class="addFile" id="addFile">+</div>
+		          			<br/>
+		          		</div>
+		          		<div class="h_right">
+		          			<div class="file_container"></div>
+		          			<div class="btn_container">
+		          				<button id="save" ng-click="close()" class="info_btn">Upload</button>
+		          				<button id="cancel" ng-click="close()" class="info_btn">Cancel</button>
+		          			</div>
+		          		</div>
+		          </div>
+		          <!-- <button >close</button> -->
+		        </div>
+		      </div>
+	    	</div>
+	    	<div class="temp2" style="display:none;">
+	    		<div class="play_modal" ng-show="isPlaying">
+	    			<div class="play_container" ng-switch on="model[playingIndex].type.toLowerCase()">
+	    			<div class="left_btn" ng-click="showPre()"><</div><div class="right_btn" ng-click="showNext()">></div>
+	    				<div class="play_header">
+	    					<div class="close_btn" ng-click="closeDialog()"></div>
+	    				</div>
+	    				<div class="play_content"  src="model[playingIndex].src">
+		    				<div class="content_area image_area" ng-switch-when="image">
+		    					<img src="{{model[playingIndex].src}}"/>
+		    				</div>
+		    				<div class="content_area audio_area" ng-switch-when="audio">
+		    					<h1>audio</h1>
+		    					<div id="jplayer_audio" style="display:none;"></div>
+		    					<a href="#" id="playAudio">play</a>
+		    					<a href="#" id="stopAudio">stop</a>
+		    				</div>
+		    				<div class="content_area video_area" ng-switch-when="video">
+		    					<h1>video</h1>
+		    				</div>
+	    				</div>
+	    				<!-- <h1>{{playingModel.src}}</h1> -->
+	    			</div>
+	    		</div>
+	    	</div>
+
+			<div class="func">
+				<div class="upload_btn">
+					<div class="upload_icon"></div>
+					<div class="upload_box"  ng-click="open()"><h3>Upload</h3>Max 2MB</div>
+				</div>
+				<div class="search_panel">
+					<input type="text" name="search" id="search" placeholder="search file"/>
+					<div class="search_btn">
+						
+					</div>
+				</div>
+			</div>
+			<div class="main" ng-switch on="mainTab">
+				<div class="files">
+					<div class="file_item" ng-repeat="i in model" ng-mouseover="show($index)" ng-class="{selected:selectedItem[$index]}">
+							<div class="check" ng-show="selectedItem[$index]">
+								
+							</div>
+							<input type="checkbox" class="check_box" ng-show="hoverIndex==$index || selectedItem[$index]" ng-click="check($index)"/>
+							<div class="content" ng-click="openPlayer($index,i.type)"  type="{{i.type}}">
+								<img src="{{i.src}}"/>
+							</div>
+					</div>
+				</div>
+				<div id="static" class="property" ng-show="!isMultiFile()">
+					<div class="tab">
+						<div class="tab_item" ng-class="{tab_current:mainTab=='single'}" ng-click="single()"><span>File Details</span><br/>1 file</div>
+						<div class="tab_item" ng-class="{tab_current:mainTab=='multi'}" ng-click="multi()"><span>Attachment</span><br/>2 activities</div>
+					</div>
+					<div class="pro_content"  ng-switch-when="single">
+						<div class="static_info">
+							<p>Reference: <span class="static_span">{{tempModel[checkIndex].reference}}</span></p>
+							<p>File Name: <span class="static_span">{{tempModel[checkIndex].fileName}}</span></p>
+							<p>Upload date: <span class="static_span">{{tempModel[checkIndex].date}}</span></p>
+							<p>Uploaded by: <span class="static_span">{{tempModel[checkIndex].user}}</span></p>
+						</div>
+						<div class="edit_info">
+							<p class="edit_item">
+								<span class="label">Name:</span>
+								<input type="text" name="name" id="name" class="edit_input" ng-model="tempModel[checkIndex].name"/>
+							</p>
+							<p class="edit_item">
+								<span class="label">Product:</span>
+								<select ng-model="tempModel[checkIndex].product" ng-options="t for t in config.product" name="name" id="name" class="edit_select">
+									<option>test</option>
+								</select>
+							</p>
+							<p class="edit_item">
+								<span class="label">Book:</span>
+								<select ng-model="tempModel[checkIndex].book" ng-options="t for t in config.book" name="book" id="book" class="edit_select">
+									<option>test</option>
+								</select>
+								<span class="label">Unit:</span>
+								<select ng-model="tempModel[checkIndex].unit" ng-options="t for t in config.unit" name="unit" id="unit" class="edit_select">
+									<option>test</option>
+								</select>
+							</p>
+							<p class="edit_item">
+								<span class="label">Media Type:</span>
+								<select ng-model="tempModel[checkIndex].type" ng-options="t for t in config.mediatype" name="media_type" id="media_type" class="edit_select">
+									<option>test</option>
+								</select>
+							</p>
+							<p class="edit_item">
+								<span class="label">Tags:</span>
+								<input type="text" name="tag" id="tag" class="edit_input"/>
+							</p>
+						</div>
+						<div class="btn_area">
+							<button id="save" class="info_btn">Save</button>
+							<button id="cancel" class="info_btn">Cancel</button>
+						</div>
+					</div>
+					<div class="pro_content"  ng-switch-when="multi">
+						<div class="belong_item">
+							<div class="act_type">
+							Listen and Choose
+							</div>
+							<div class="act_detail">
+								Book 3 - Unit 1 - Step 2 - Activity 1
+							</div>
+							<br/>
+							<div class="right_arrow">></div>
+						</div>
+						<div class="belong_item">
+							<div class="act_type">
+							Listen and Choose
+							</div>
+							<div class="act_detail">
+								Book 3 - Unit 1 - Step 2 - Activity 1
+							</div>
+							<br/>
+							<div class="right_arrow">></div>
+						</div>
+					</div>
+				</div>
+				<div id="multiple_file" style="font-size:15px;" ng-show="isMultiFile()" class="property edit_info">
+					<p>
+						<span class="label">File Details</span>
+						<br/>
+						<span class="mul_title">{{selectedNum}} files</span>
+					</p>
+					<p class="edit_item">
+						<span class="label">Product:</span>
+						<select name="name" id="name" class="edit_select" ng-model="commonProperty.product"  ng-options="t for t in config.product" >
+							<option>test</option>
+						</select>
+					</p>
+					<p class="edit_item">
+						<span class="label">Book:</span>
+						<select name="book" id="book" class="edit_select" ng-model="commonProperty.book" ng-options="t for t in config.book" >
+							<option>test</option>
+						</select>
+						<span class="label">Unit:</span>
+						<select name="unit" id="unit" class="edit_select" ng-model="commonProperty.unit" ng-options="t for t in config.unit" >
+							<option>test</option>
+						</select>
+					</p>
+					<p class="edit_item">
+						<span class="label">Media Type:</span>
+						<select name="media_type" id="media_type" ng-model="commonProperty.mediatype" class="edit_select" ng-options="t for t in config.mediatype" >
+							<option>test</option>
+						</select>
+					</p>
+					<p class="edit_item">
+						<span class="label">Tags:</span>
+						<input type="text" name="tag" id="tag" class="edit_input"/>
+					</p>
+					<div class="mul_btn_area">
+							<button id="save" ng-click="saveBoth()" class="info_btn">Save</button>
+							<button id="cancel" class="info_btn">Cancel</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</body>
+<html>
