@@ -212,6 +212,7 @@ mediaBank.directive('playModal',function () {
 			console.log($attrs)
 		},
 		link: function (scope,ele,attr) {
+			
 			var $root = $(ele);
 			var src = $(ele).find(".play_content").attr('src')
 			src = scope.$eval(src);
@@ -220,16 +221,18 @@ mediaBank.directive('playModal',function () {
 			var $jplayer = $root.find('#jplayer_audio');
 			$jplayer.jPlayer({
 				ready: function() {
-                    $(this).jPlayer('setMedia', {
-                        mp3: src
-                    });
+                    // $(this).jPlayer('setMedia', {
+                    //     mp3: src
+                    // });
                 },
                 swfPath: "http://jplayer.org/latest/js",
                 supplied: "mp3",
 			});	
-			$root.find('#playAudio').bind('click',function () {
-				$jplayer.jPlayer('play');
-			});
+			scope.playAudio = function () {
+				$jplayer.jPlayer('setMedia',{
+					mp3: ''
+				})
+			};
 		}
 	}
 });

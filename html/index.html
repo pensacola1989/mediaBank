@@ -48,13 +48,14 @@
 	    					<div class="close_btn" ng-click="closeDialog()"></div>
 	    				</div>
 	    				<div class="play_content"  src="model[playingIndex].src">
+	    					<div id="jplayer_audio" style="display:none;"></div>
 		    				<div class="content_area image_area" ng-switch-when="image">
 		    					<img src="{{model[playingIndex].src}}"/>
 		    				</div>
 		    				<div class="content_area audio_area" ng-switch-when="audio">
 		    					<h1>audio</h1>
-		    					<div id="jplayer_audio" style="display:none;"></div>
-		    					<a href="#" id="playAudio">play</a>
+		    					<!-- <div id="jplayer_audio" style="display:none;"></div> -->
+		    					<a href="#" id="playAudio" ng-click="playAudio()">play</a>
 		    					<a href="#" id="stopAudio">stop</a>
 		    				</div>
 		    				<div class="content_area video_area" ng-switch-when="video">
