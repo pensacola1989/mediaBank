@@ -70,6 +70,20 @@ var Model = {
 			src: 'http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3',
 			tags: ['xxx','sss','ddd']
 		},
+		{
+			type: 'Video',
+			fileName: 'testFile',
+			reference: 'xsdfsdfsdfsdxx',
+			date: '20130909',
+			uploader: 'nick',
+			name: 'test',
+			product: 'NHF',
+			book: '1',
+			unit: '3',
+			user: 'www',
+			src: 'http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer_480x270_h264aac.m4v',
+			tags: ['xxx','sss','ddd']
+		}
 	],
 	selectItem: {
 		product: [
@@ -220,13 +234,29 @@ mediaBank.directive('playModal',function () {
 		link: function (scope,ele,attr) {
 			
 			var $root = $(ele);
-			var src = $(ele).find(".play_content").attr('src')
-			src = scope.$eval(src);
+			// var src = $(ele).find(".play_content").attr('src')
+			// src = scope.$eval(src);
 			scope.$jplayer = $root.find('#jplayer_audio');
+			scope.$jplayerVideo = $root.find('#jplayer_video');
+
+
+			scope.$jplayerVideo.jPlayer({
+				swfPath: "http://jplayer.org/latest/js",
+                supplied: "m4v, ogv"
+			});
+
 			scope.$jplayer.jPlayer({
                 swfPath: "http://jplayer.org/latest/js",
-                supplied: "mp3",
+                supplied: "mp3"
 			});	
+
+
+			scope.playVideo = function () {
+				scope.$jplayerVideo.jPlayer('setMedia',{
+					m4v: scope.model[scope.playingIndex].src
+				}).jPlayer('play');
+			};
+
 			scope.playAudio = function () {
 				scope.$jplayer.jPlayer('setMedia',{
 					mp3: scope.model[scope.playingIndex].src

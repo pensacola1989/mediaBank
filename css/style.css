@@ -213,3 +213,8 @@ cursor: pointer;
 	border-color: #EEE;
 	color:#333;
 }
+
+#jplayer_video{
+	border: 1px solid;
+	height: 400px;
+}

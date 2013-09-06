@@ -50,6 +50,7 @@
 	    				</div>
 	    				<div class="play_content"  src="model[playingIndex].src">
 	    					<div id="jplayer_audio" style="display:none;"></div>
+	    					<div id="jpalyer_video" ng-show="model[playingIndex].type.toLowerCase() == 'video'"></div>
 		    				<div class="content_area image_area" ng-switch-when="image">
 		    					<img src="{{model[playingIndex].src}}"/>
 		    				</div>
@@ -61,6 +62,8 @@
 		    				</div>
 		    				<div class="content_area video_area" ng-switch-when="video">
 		    					<h1>video</h1>
+		    					<a href="#" id="playVideo" ng-click="playVideo()">play</a>
+		    					<a href="#" id="stopVideo" ng-click="stopVideo()">stop</a>
 		    				</div>
 	    				</div>
 	    				<!-- <h1>{{playingModel.src}}</h1> -->
