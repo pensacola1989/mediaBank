@@ -25,7 +25,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
-			src: 'http://10.128.34.190/ActivityResources/16096/a_MatchWithOneStimuli6665432299487293.png',
+			src: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			tags: ['xxx','sss','ddd']
 		},
 		{
@@ -39,7 +39,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
-			src: 'http://10.128.34.190/ActivityResources/16096/a_MatchWithOneStimuli6665432299487293.png',
+			src: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			tags: ['xxx','sss','ddd']
 		},
 		{
@@ -53,7 +53,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
-			src: 'http://10.128.34.190/ActivityResources/16096/a_MatchWithOneStimuli6665432299487293.png',
+			src: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			tags: ['xxx','sss','ddd']
 		},
 		{
@@ -199,11 +199,17 @@ mediaBank.directive('playModal',function () {
 				$scope.playingIndex = index;
 			};
 			$scope.showPre = function () {
+				if($scope.$jplayer) {
+					$scope.$jplayer.jPlayer('stop');
+				}
 				console.log($scope.playingIndex);
 				if($scope.playingIndex > 0)
 					$scope.playingIndex--;
 			};
 			$scope.showNext = function () {
+				if($scope.$jplayer) {
+					$scope.$jplayer.jPlayer('stop');
+				}
 				console.log($scope.playingIndex);
 				if($scope.playingIndex < $scope.model.length - 1)
 					$scope.playingIndex++;
@@ -216,22 +222,19 @@ mediaBank.directive('playModal',function () {
 			var $root = $(ele);
 			var src = $(ele).find(".play_content").attr('src')
 			src = scope.$eval(src);
-			console.log(src);
-			//console.debug(scope.$parent.$eval(attr.ngModel));
-			var $jplayer = $root.find('#jplayer_audio');
-			$jplayer.jPlayer({
-				ready: function() {
-                    // $(this).jPlayer('setMedia', {
-                    //     mp3: src
-                    // });
-                },
+			scope.$jplayer = $root.find('#jplayer_audio');
+			scope.$jplayer.jPlayer({
                 swfPath: "http://jplayer.org/latest/js",
                 supplied: "mp3",
 			});	
 			scope.playAudio = function () {
-				$jplayer.jPlayer('setMedia',{
-					mp3: ''
-				})
+				scope.$jplayer.jPlayer('setMedia',{
+					mp3: scope.model[scope.playingIndex].src
+				}).jPlayer('play');
+			};
+
+			scope.stopAudio = function () {
+				scope.$jplayer.jPlayer('stop')	
 			};
 		}
 	}

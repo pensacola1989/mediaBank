@@ -38,7 +38,7 @@ body{font-family:Arial;height:100%;width: 100%;background-color: #EEE;}
 span.static_span{color:#0FCECE;}
 .btn_area{margin-left:20px;margin-top:50px;}
 /*.btn_area*/ button{border:none;font-family:Arial;font-weight:normal;width:100px;height:30px;line-height:30px;color:#FFF;cursor:pointer;}
-#save{background-color:#00BBBB;}
+#save{background-color:#0FA8CE;}
 #save:hover{background-color:#00DDDD;}
 #save:active{background-color:#000;}
 #cancel{background-color:#CACACA;margin-left:20px;}
