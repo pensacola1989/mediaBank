@@ -215,6 +215,8 @@ cursor: pointer;
 }
 
 #jplayer_video{
-	border: 1px solid;
+	width: 680px;
 	height: 400px;
+	margin: auto;
+}
 }
