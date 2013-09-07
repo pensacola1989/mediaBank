@@ -206,6 +206,16 @@ mediaBank.directive('playModal',function () {
 			$scope.playingIndex = 0;
 			$scope.closeDialog = function () {
 				$scope.isPlaying = false;	
+				// var player = $scope.$jplayer || $scope.$jplayerVideo;
+				// if(player) {
+				// 	player.jPlayer('stop');
+				// }
+				if($scope.$jplayer) {
+					$scope.stopAudio();
+				}
+				if($scope.$jplayerVideo) {
+					$scope.stopVideo();
+				}
 			};
 			$scope.openPlayer = function (index,type) {
 				$scope.isPlaying = true;	
@@ -214,16 +224,30 @@ mediaBank.directive('playModal',function () {
 			};
 			$scope.showPre = function () {
 				if($scope.$jplayer) {
-					$scope.$jplayer.jPlayer('stop');
+					$scope.stopAudio();
 				}
+				if($scope.$jplayerVideo) {
+					$scope.stopVideo();
+				}
+				// var player = $scope.$jplayer || $scope.$jplayerVideo;
+				// if(player) {
+				// 	player.jPlayer('stop');
+				// }
 				console.log($scope.playingIndex);
 				if($scope.playingIndex > 0)
 					$scope.playingIndex--;
 			};
 			$scope.showNext = function () {
 				if($scope.$jplayer) {
-					$scope.$jplayer.jPlayer('stop');
+					$scope.stopAudio();
 				}
+				if($scope.$jplayerVideo) {
+					$scope.stopVideo();
+				}
+				// var player = $scope.$jplayer || $scope.$jplayerVideo;
+				// if(player) {
+				// 	player.jPlayer('stop');
+				// }
 				console.log($scope.playingIndex);
 				if($scope.playingIndex < $scope.model.length - 1)
 					$scope.playingIndex++;
@@ -255,6 +279,9 @@ mediaBank.directive('playModal',function () {
 				scope.$jplayerVideo.jPlayer('setMedia',{
 					m4v: scope.model[scope.playingIndex].src
 				}).jPlayer('play');
+			};
+			scope.stopVideo = function () {
+				scope.$jplayerVideo.jPlayer('stop');
 			};
 
 			scope.playAudio = function () {
