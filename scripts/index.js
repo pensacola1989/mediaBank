@@ -11,6 +11,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
+			thumbnial: 'http://ww4.sinaimg.cn/bmiddle/9e7eb410jw1e8big9ppqpj213v0lsdjv.jpg',
 			src: 'http://ww4.sinaimg.cn/bmiddle/9e7eb410jw1e8big9ppqpj213v0lsdjv.jpg',
 			tags: ['xxx','sss','ddd']
 		},
@@ -25,6 +26,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
+			thumbnial: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			src: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			tags: ['xxx','sss','ddd']
 		},
@@ -39,6 +41,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
+			thumbnial: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			src: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			tags: ['xxx','sss','ddd']
 		},
@@ -53,6 +56,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
+			thumbnial: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			src: 'http://ww1.sinaimg.cn/bmiddle/7a11525egw1e8cpx56s0sj20hu0a3js7.jpg',
 			tags: ['xxx','sss','ddd']
 		},
@@ -67,6 +71,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
+			thumbnial: 'http://ww2.sinaimg.cn/bmiddle/80a16a36gw1e8ezn1p03xj21kw0vlgqw.jpg',
 			src: 'http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3',
 			tags: ['xxx','sss','ddd']
 		},
@@ -81,6 +86,7 @@ var Model = {
 			book: '1',
 			unit: '3',
 			user: 'www',
+			thumbnial: 'http://ww2.sinaimg.cn/bmiddle/80a16a36gw1e8ezn1p03xj21kw0vlgqw.jpg',
 			src: 'http://www.jplayer.org/video/m4v/Big_Buck_Bunny_Trailer_480x270_h264aac.m4v',
 			tags: ['xxx','sss','ddd']
 		}
@@ -123,13 +129,6 @@ mediaBank.controller('index',function ($scope) {
 	$scope.model = Model.resources;
 
 	$scope.mainTab = 'single';
-
-	// $scope.playingModel = '';
-
-	// $scope.openPlayer = function (index) {
-	// 	$scope.isPlaying = true;	
-	// 	$scope.playingModel = $scope.model[index];
-	// };
 
 	$scope.commonProperty = {
 		product: '',
@@ -206,10 +205,6 @@ mediaBank.directive('playModal',function () {
 			$scope.playingIndex = 0;
 			$scope.closeDialog = function () {
 				$scope.isPlaying = false;	
-				// var player = $scope.$jplayer || $scope.$jplayerVideo;
-				// if(player) {
-				// 	player.jPlayer('stop');
-				// }
 				if($scope.$jplayer) {
 					$scope.stopAudio();
 				}
@@ -229,10 +224,6 @@ mediaBank.directive('playModal',function () {
 				if($scope.$jplayerVideo) {
 					$scope.stopVideo();
 				}
-				// var player = $scope.$jplayer || $scope.$jplayerVideo;
-				// if(player) {
-				// 	player.jPlayer('stop');
-				// }
 				console.log($scope.playingIndex);
 				if($scope.playingIndex > 0)
 					$scope.playingIndex--;
@@ -244,10 +235,6 @@ mediaBank.directive('playModal',function () {
 				if($scope.$jplayerVideo) {
 					$scope.stopVideo();
 				}
-				// var player = $scope.$jplayer || $scope.$jplayerVideo;
-				// if(player) {
-				// 	player.jPlayer('stop');
-				// }
 				console.log($scope.playingIndex);
 				if($scope.playingIndex < $scope.model.length - 1)
 					$scope.playingIndex++;
@@ -258,8 +245,6 @@ mediaBank.directive('playModal',function () {
 		link: function (scope,ele,attr) {
 			
 			var $root = $(ele);
-			// var src = $(ele).find(".play_content").attr('src')
-			// src = scope.$eval(src);
 			scope.$jplayer = $root.find('#jplayer_audio');
 			scope.$jplayerVideo = $root.find('#jplayer_video');
 
