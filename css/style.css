@@ -6,7 +6,7 @@ body{font-family:Arial;height:100%;width: 100%;background-color: #EEE;}
 .upload_btn:hover{background-color:#009999;}
 .upload_btn:active{}
 .upload_icon{float:left;height:28px;width:28px;background:url('../images/command2.png') no-repeat 0px 0px;margin-top:-3px;}
-.search_panel{border:1px solid #EEE;float:left;height:30px;margin-left:200px;width:220px;margin-top:5px;background-color:#FFF;padding-right:5px;position:relative;}
+.search_panel{border:1px solid #EEE;float:left;height:30px;margin-left:320px;width:220px;margin-top:5px;background-color:#FFF;padding-right:5px;position:relative;}
 .search_panel input{font-family:Arial;height:100%;width:220px;float:left;border:none;padding-left:5px;font-size:15px;font-weight:normal;position:absolute;background-color:#EEE;}
 .search_btn input:focus{background-color:#FFF;}
 .search_btn{width:15px;height:15px;float:left;background:url('../images/command2.png') no-repeat -144px 0;margin-top:5px;cursor:pointer;position:absolute;right:10px;}

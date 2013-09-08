@@ -93,6 +93,9 @@
 							<div class="content" ng-click="openPlayer($index,i.type)"  type="{{i.type}}">
 								<img src="{{i.thumbnial}}"/>
 							</div>
+							<div class="control_btn" ng-show="hoverIndex==$index">
+								<a href="#" class="delete">delete</a>
+							</div>
 					</div>
 				</div>
 				<div id="static" class="property" ng-show="!isMultiFile()">
