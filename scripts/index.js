@@ -130,6 +130,10 @@ mediaBank.controller('index',function ($scope) {
 
 	$scope.mainTab = 'single';
 
+	$scope.fileItemDelete = function (index) {
+		$scope.model.splice(index,1);
+	};
+
 	$scope.commonProperty = {
 		product: '',
 		book: '' ,
@@ -258,7 +262,6 @@ mediaBank.directive('playModal',function () {
                 swfPath: "http://jplayer.org/latest/js",
                 supplied: "mp3"
 			});	
-
 
 			scope.playVideo = function () {
 				scope.$jplayerVideo.jPlayer('setMedia',{
