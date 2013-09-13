@@ -50,7 +50,7 @@ float: left;
 width: 250px;
 padding: 5px;
 cursor: pointer;
-padding-left: 40px;
+padding-left: 20px;
 }
 .belong_item:first-child{margin-top:10px;}
 .belong_item:hover{color:#FFF;background-color:#E7E7E7;}
@@ -130,6 +130,7 @@ padding: 20px;
 .file_container{
 	height: 350px;
 	overflow-y:scroll;
+    margin-bottom: 10px;
 }
 
 .play_modal{
@@ -234,5 +235,136 @@ cursor: pointer;
 	height: 30px;
 	width: 30px;
 	margin: auto;
+    margin-left: 80px;
 	background: url('../images/ewaCommon.png') no-repeat 4px -100px;
+}
+
+.confirmWin{
+ border: 1px solid #FF6633;
+width: 500px;
+height: 200px;
+background-color: rgb(255, 255, 255);
+margin: 100px auto auto;
+box-shadow: 0 0 10px 1px #FF6633;
+} 
+.confirmModal{
+  border:1px solid;
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index: 1000;
+  background-color:rgba(255,255,255,0.5);
+}
+.confirmHeader{
+  padding:10px;
+  height: 30px;
+}
+.body{padding:10px;color:#CACACA;}
+.confirmTitle{
+	float:left;
+}
+.confirmClose{
+	height: 30px;
+	width: 30px;
+	float: right;
+	background: url('../images/close_dlg.png') no-repeat 10px;
+	cursor: pointer;
+}
+.preview_container {
+    border: 1px solid #CACACA;
+    height: 150px;
+    width: 150px;
+    float: left;
+    margin: 5px;
+    position: relative;
+}
+.preview_container img {
+    width: 100%;
+}
+.progress {
+    position: absolute;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    color: #FFF;
+
+}
+.progress_bar {
+    
+    height: 5px;
+    background: #0FA8CE;
+    width: 0;
+}
+.ctrl_pannel {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    height: 50px;
+}
+#playAudio img{
+    float: left;
+    height: 40px;
+    margin: 5px;
+}
+#stopAudio img {
+    float: left;
+    height: 40px;
+    margin: 5px;
+}
+
+
+#A1 img{
+    float: left;
+    height: 40px;
+    margin: 5px;
+}
+#A4 img {
+    float: left;
+    height: 40px;
+    margin: 5px;
+}
+
+.jp-progress {
+    float: left;
+    width: 600px;
+    margin-top: 20px;
+    height: 5px;
+    background-color: #CACACA;
+}
+.jp-seek-bar {
+    height: 5px;
+}
+.jp-play-bar {
+    background-color: #0FA8CE;
+    height: 5px;
+}
+.mt {
+    border: 1px solid;
+    height: 30px;
+    display: block;
+    float: right;
+    margin: 10px;
+    margin-right: 30px;
+    background-color: orange;
+    width: 30px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 20px;
+    border: 1px solid orange;
+}
+.mt img {
+    height: 20px;
+}
+.replace{
+    float: left;
+    height: 25px;
+    width: 25px;
+    margin: 2px;
+    margin-left: 30px;
 }

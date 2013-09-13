@@ -11,6 +11,12 @@
 	</head>
 	<body>
 		<div class="wrapper" ng-app="mediaBank" ng-controller="index">
+			<confirm
+			    title="Warning!"
+			    on-close="confirmOption.show=false"
+			    visible="{{confirmOption.show}}">
+			    {{confirmOption.Confirmcontent}}
+			</confirm>
 			<div play-modal></div>
 			<div modal-win></div>
 			<div class="temp" style="display:none;">
@@ -30,10 +36,14 @@
 		          			<br/>
 		          		</div>
 		          		<div class="h_right">
-		          			<div class="file_container"></div>
+		          		    <div class="file_container">
+<!--		          		        <div class="preview_container">
+		          		            <img class="preview_img" src="#" alt="your image" />
+		          		        </div>-->
+		          		    </div>
 		          			<div class="btn_container">
-		          				<button id="save" ng-click="close()" class="info_btn">Upload</button>
-		          				<button id="cancel" ng-click="close()" class="info_btn">Cancel</button>
+		          				<button id="save" class="info_btn">Upload</button>
+		          				<button id="cancel" ng-click="close()" class="info_btn">Close</button>
 		          			</div>
 		          		</div>
 		          </div>
@@ -50,20 +60,64 @@
 	    				</div>
 	    				<div class="play_content"  src="model[playingIndex].src">
 	    					<div id="jplayer_audio" style="display:none;"></div>
-	    					<div id="jplayer_video" ng-show="model[playingIndex].type.toLowerCase() == 'video'"></div>
+	    				    <div id="jplayer_video" ng-show="model[playingIndex].type.toLowerCase() == 'video'"></div>
+	    				    <div class="ctrl_pannel" ng-show="model[playingIndex].type.toLowerCase() == 'audio'">
+	    				        <a href="#" id="playAudio" ng-click="playAudio()">
+	    				            <img src="../images/stiPlay_btn.png" alt="play" />
+	    				        </a>
+	    				        <a href="#" class="mt" id="mute">
+	    				            <img src="../images/volumn.png" alt="play" />
+	    				        </a>
+	    				        <a href="#" class="mt" id="unmute">
+	    				            <img src="../images/unvolumn.png" alt="play" />
+	    				        </a>
+	    				        <a href="#" id="stopAudio" ng-click="stopAudio()">
+	    				            <img src="../images/stiAudio_stop.png" alt="play" />
+	    				        </a>		    				        
+	    				        <div class="jp-progress">
+	    				            <div class="jp-seek-bar">
+	    				                <div class="jp-play-bar"></div>
+	    				            </div>
+	    				        </div>
+	    				    </div>
+                            <div class="ctrl_pannel" ng-show="model[playingIndex].type.toLowerCase() == 'video'">
+		    				        <a href="#" id="A1" ng-click="playVideo()">
+		    				            <img src="../images/stiPlay_btn.png" alt="play" />
+		    				        </a>
+                                    <a href="#" class="mt" id="A2">
+                                        <img src="../images/volumn.png" alt="play" />
+                                    </a>
+                                    <a href="#" class="mt" id="A3">
+                                        <img src="../images/unvolumn.png" alt="play" />
+                                    </a>
+                                    <a href="#" id="A4" ng-click="stopVideo()">
+                                        <img src="../images/stiAudio_stop.png" alt="play" />
+                                    </a>		    				        
+                                   <div class="jp-progress">
+                                        <div class="jp-seek-bar">
+                                            <div class="jp-play-bar"></div>
+                                        </div>
+                                    </div>
+                            </div>
 		    				<div class="content_area image_area" ng-switch-when="image">
 		    					<img src="{{model[playingIndex].src}}"/>
 		    				</div>
 		    				<div class="content_area audio_area" ng-switch-when="audio">
 		    					<h1>audio</h1>
-		    					<!-- <div id="jplayer_audio" style="display:none;"></div> -->
-		    					<a href="#" id="playAudio" ng-click="playAudio()">play</a>
-		    					<a href="#" id="stopAudio" ng-click="stopAudio()">stop</a>
+		    				    <!-- <div id="jplayer_audio" style="display:none;"></div> -->
+		    				    <!--<div class="ctrl_pannel">
+		    				        <a href="#" id="playAudio" ng-click="playAudio()">
+		    				            <img src="../images/right_arrow.png" alt="play" />
+
+		    				        </a>
+		    				        <a href="#" id="mute">mute</a>
+                                    <a href="#" id="unmute">unmute</a>
+		    				        <a href="#" id="stopAudio" ng-click="stopAudio()">stop</a>		    				        
+		    				    </div>-->
+
 		    				</div>
 		    				<div class="content_area video_area" ng-switch-when="video">
 		    					<h1>video</h1>
-		    					<a href="#" id="playVideo" ng-click="playVideo()">play</a>
-		    					<a href="#" id="stopVideo" ng-click="stopVideo()">stop</a>
 		    				</div>
 	    				</div>
 	    				<!-- <h1>{{playingModel.src}}</h1> -->
@@ -85,17 +139,20 @@
 			</div>
 			<div class="main" ng-switch on="mainTab">
 				<div class="files">
-					<div class="file_item" ng-repeat="i in model" ng-mouseover="show($index)" ng-class="{selected:selectedItem[$index]}">
-							<div class="check" ng-show="selectedItem[$index]">
+					<div class="file_item" ng-repeat="i in model" ng-mouseover="show($index)" ng-class="{selected:selectedItem[model[$index].id]}">
+							<div class="check" ng-show="selectedItem[model[$index].id]">
 								
 							</div>
-							<input type="checkbox" class="check_box" ng-show="hoverIndex==$index || selectedItem[$index]" ng-click="check($index)"/>
+							<input type="checkbox" class="check_box" ng-show="hoverIndex==$index || selectedItem[model[$index].id]" ng-checked="selectedItem[model[$index].id]" ng-click="check($index)"/>
 							<div class="content" ng-click="openPlayer($index,i.type)"  type="{{i.type}}">
 								<img src="{{i.thumbnial}}"/>
 							</div>
-							<div class="control_btn" ng-show="hoverIndex==$index">
-								<a href="#" class="delete" ng-click="fileItemDelete($index)"></a>
-							</div>
+					    <div class="control_btn" ng-show="selectedItem[model[$index].id]">
+					        <a href="#" class="replace">
+                                <img src="../images/Command-Refresh-256.png" alt="Alternate Text" />
+					        </a>
+					        <a href="#" class="delete" ng-click="fileItemDelete($index)"></a>
+					    </div>
 					</div>
 				</div>
 				<div id="static" class="property" ng-show="!isMultiFile()">
