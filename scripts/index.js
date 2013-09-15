@@ -367,7 +367,24 @@ mediaBank.directive('modalWin',function(){
     replace: true,
     template: $(".temp").html(),
     controller: function ($scope, $element, $attrs) {
-        function readURL(input) {
+    
+    },
+    link: function (scope,ele,attr) {
+    	var height = $(document).height();
+    	var width = $(document).width();
+        var css = {
+            position: 'fixed',
+            height: height,
+            width: width,
+            left: 0,
+            top: 0,
+            bottom: 0,
+            right: 0,
+            'background-color': 'rgba(0,0,0,0.7)',
+            'z-index': '10000'
+        };
+    	$(ele).css(css);
+    	function readURL(input) {
 
             if (input.files.length) {
                 var files = input.files;
@@ -403,40 +420,41 @@ mediaBank.directive('modalWin',function(){
             }
         }
 
+
         var uploadedModel = [];
-       $scope.drpProduct = ['NHF','Frontrunner'];
-       $scope.product = '';
-       $scope.val = 'fuck you';
-       $scope.isOpen = false; 
-       $scope.open = function() {
-           $scope.isOpen = true; 
+       scope.drpProduct = ['NHF','Frontrunner'];
+       scope.product = '';
+       scope.val = 'fuck you';
+       scope.isOpen = false; 
+       scope.open = function() {
+           scope.isOpen = true; 
        };
 
-       $scope.close = function () {
-           if ($scope.uploader.state == 2) {
+       scope.close = function () {
+           if (scope.uploader.state == 2) {
                return false;
            } 
-           $scope.isOpen = false;
+           scope.isOpen = false;
            $('.file_container').empty();
-           $scope.uploader.splice();
+           scope.uploader.splice();
            if (uploadedModel.length) {
                for (var i = 0; i < uploadedModel.length; i++) {
-                   $scope.model.push(uploadedModel[i]);
-                   $scope.selectedItem[uploadedModel[i].id] = true;
-                   $scope.tempModel[uploadedModel[i].id] = uploadedModel[i];
-                   $scope.selectedNum++;
+                   scope.model.push(uploadedModel[i]);
+                   scope.selectedItem[uploadedModel[i].id] = true;
+                   scope.tempModel[uploadedModel[i].id] = uploadedModel[i];
+                   scope.selectedNum++;
                }
-            //   $scope.model.reverse();
+            //   scope.model.reverse();
                uploadedModel = [];
            }
        };
 
-        $scope.uploader = new plupload.Uploader({
+        scope.uploader = new plupload.Uploader({
     		runtimes: 'html5,html4',
             browse_button:'addFile',
             max_file_size: '20000mb',
             chunk_size: '512kb',
-            multi_selection: false,
+            multi_selection: true,
             // resize: { width: 125, height: 85, quality: 90 },
             flash_swf_url: '../scripts/lib/plupload.flash.swf',
             filters: [{
@@ -444,24 +462,24 @@ mediaBank.directive('modalWin',function(){
             }]
     	});
         
-        $scope.fileLength = 0;
-        $scope.currentUpload = 0;
-    	$scope.uploader.bind('init',function () {
+        scope.fileLength = 0;
+        scope.currentUpload = 0;
+    	scope.uploader.bind('init',function () {
     		console.log('init');
     	});
-        $scope.uploader.bind('UploadProgress', function(up, files) {
-            $('.progress_percent').eq($scope.currentUpload).html(files.percent + '%');
-            $('.progress_bar').eq($scope.currentUpload).css('width', files.percent + '%');
+        scope.uploader.bind('UploadProgress', function(up, files) {
+            $('.progress_percent').eq(scope.currentUpload).html(files.percent + '%');
+            $('.progress_bar').eq(scope.currentUpload).css('width', files.percent + '%');
         });
-    	$scope.uploader.bind('FilesAdded',function (up,files) {
+    	scope.uploader.bind('FilesAdded',function (up,files) {
     		console.log(up);
-    		$scope.$apply(function () {
-    			$scope.fileLength = files.length;
+    		scope.$apply(function () {
+    			scope.fileLength = files.length;
     		});
     	    
     	    readURL($('input[type=file]')[0]);
     	});
-        $scope.uploader.bind('BeforeUpload', function(up, file) {
+        scope.uploader.bind('BeforeUpload', function(up, file) {
             var mediaName = 'MediaBank' + Math.random().toString().substr(2);
             up.settings.url = '/Upload.ashx?medianame=' + mediaName + '&activityid=2013';
         });
@@ -475,9 +493,9 @@ mediaBank.directive('modalWin',function(){
 
             return ret[type] || '';
         }
-        $scope.uploader.bind('FileUploaded', function(up, file, info) {
-            $scope.currentUpload++;
-            var id = $scope.model[$scope.model.length - 1].id;
+        scope.uploader.bind('FileUploaded', function(up, file, info) {
+            scope.currentUpload++;
+            var id = scope.model[scope.model.length - 1].id;
             var newModel = {
                 id: ++id,
                 type: getMediaType(file.name.split('.')[1].toLowerCase()),
@@ -497,31 +515,14 @@ mediaBank.directive('modalWin',function(){
             };
             uploadedModel.push(newModel);
         });
-        $scope.uploader.bind('UploadComplete', function(up, file) {
-            $scope.currentUpload = 0;
-            console.log($scope.model);
+        scope.uploader.bind('UploadComplete', function(up, file) {
+            scope.currentUpload = 0;
+            console.log(scope.model);
         });
-        $scope.uploader.init();
+        scope.uploader.init();
         $('#save').bind('click', function() {
-            $scope.uploader.start();
+            scope.uploader.start();
         });
-    },
-    link: function (scope,ele,attr) {
-    	var height = $(document).height();
-    	var width = $(document).width();
-        var css = {
-            position: 'fixed',
-            height: height,
-            width: width,
-            left: 0,
-            top: 0,
-            bottom: 0,
-            right: 0,
-            'background-color': 'rgba(0,0,0,0.7)',
-            'z-index': '10000'
-        };
-    	$(ele).css(css);
-    	
     }
   };
 });
