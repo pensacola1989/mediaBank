@@ -215,9 +215,16 @@ mediaBank.controller('index',function ($scope) {
 	    }
 	};
 
+	// $scope.replaceModel = 'sd';
+
     $scope.replace = function(index) {
-        var replaceId = model[index].id;
-        
+        var replaceId = $scope.model[index].id;
+        $scope.replaceModel = $scope.model[index];
+        $scope.open();
+        $scope.uploader.settings.multi_selection = false;
+       	$scope.uploader.settings.url = 'xxx';
+       	$scope.uploader.refresh();
+        console.log($scope);
     };
 });
 
@@ -360,7 +367,6 @@ mediaBank.directive('modalWin',function(){
     replace: true,
     template: $(".temp").html(),
     controller: function ($scope, $element, $attrs) {
-        
         function readURL(input) {
 
             if (input.files.length) {
@@ -405,7 +411,7 @@ mediaBank.directive('modalWin',function(){
        $scope.open = function() {
            $scope.isOpen = true; 
        };
-    
+
        $scope.close = function () {
            if ($scope.uploader.state == 2) {
                return false;
@@ -430,6 +436,7 @@ mediaBank.directive('modalWin',function(){
             browse_button:'addFile',
             max_file_size: '20000mb',
             chunk_size: '512kb',
+            multi_selection: false,
             // resize: { width: 125, height: 85, quality: 90 },
             flash_swf_url: '../scripts/lib/plupload.flash.swf',
             filters: [{
@@ -447,6 +454,7 @@ mediaBank.directive('modalWin',function(){
             $('.progress_bar').eq($scope.currentUpload).css('width', files.percent + '%');
         });
     	$scope.uploader.bind('FilesAdded',function (up,files) {
+    		console.log(up);
     		$scope.$apply(function () {
     			$scope.fileLength = files.length;
     		});

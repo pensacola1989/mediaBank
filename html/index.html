@@ -148,7 +148,7 @@
 								<img src="{{i.thumbnial}}"/>
 							</div>
 					    <div class="control_btn" ng-show="selectedItem[model[$index].id]">
-					        <a href="#" class="replace">
+					        <a href="#" class="replace" ng-click="replace($index)">
                                 <img src="../images/Command-Refresh-256.png" alt="Alternate Text" />
 					        </a>
 					        <a href="#" class="delete" ng-click="fileItemDelete($index)"></a>
