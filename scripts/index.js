@@ -220,6 +220,7 @@ mediaBank.controller('index',function ($scope) {
     $scope.replace = function(index) {
         var replaceId = $scope.model[index].id;
         $scope.replaceModel = $scope.model[index];
+        $scope.replaceIndex = index;
         $scope.open();
         $scope.uploader.settings.multi_selection = false;
        	$scope.uploader.settings.url = 'xxx';
@@ -494,6 +495,12 @@ mediaBank.directive('modalWin',function(){
             return ret[type] || '';
         }
         scope.uploader.bind('FileUploaded', function(up, file, info) {
+        	if($scope.replaceModel) {
+        		var id = $scope.replaceModel.id;
+        		var index = $scope.replaceIndex;
+        		$scope.model[index].url = info.response;
+        		return;
+        	}
             scope.currentUpload++;
             var id = scope.model[scope.model.length - 1].id;
             var newModel = {
